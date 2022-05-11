@@ -71,11 +71,27 @@
         var filesSecond = document.getElementById('file_upload1').files;
 
         if(files.length==0){
-            alert("Please first choose or drop any file(s)...");
+            alert("Iš pradžių įdėkite failus.");
             return;
         }
          if(filesSecond.length==0){
-            alert("Please first choose or drop any file(s)...");
+            alert("Iš pradžių įdėkite failus.");
+            return;
+        }
+        if(files.length>20){
+            alert("Įdėjote per daug failų. Didžiausias leidžiamas failų kiekis viename įkėlimo laukelyje yra 20 failų.");
+            return;
+        }
+        if(filesSecond.length>20){
+            alert("Įdėjote per daug failų. Didžiausias leidžiamas failų kiekis viename įkėlimo laukelyje yra 20 failų.");
+            return;
+        }
+           if(files.split(" ").length>10000){
+            alert("Failuose viršytas žodžių limitas.");
+            return;
+        }
+        if(filesSecond.split(" ").length>10000){
+            alert("Failuose viršytas žodžių limitas.");
             return;
         }
         //var filenames=[];

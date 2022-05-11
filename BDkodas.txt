@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<style>
+    .upload-container {
+        position: relative;
+    }
+    .upload-container input {
+        border: 1px solid #92b0b3;
+        background: #f1f1f1;
+        outline: 2px dashed #92b0b3;
+        outline-offset: -10px;
+        padding: 100px 0px 100px 120px;
+        text-align: center !important;
+        width: 500px;
+    }
+    .upload-container input:hover {
+        background: #ddd;
+    }   
+    .upload-container:before {
+        position: absolute;
+        bottom: 50px;
+        left: 115px;
+        content: "Čia galite įdėti failus";
+        color: #3f8188;
+        font-weight: 900;
+    }   
+	
+	    .upload-container-second {
+        position: relative;
+		left: 800px;
+                bottom: 250px;
+    }
+    .upload-container-second input {
+        border: 1px solid #92b0b3;
+        background: #f1f1f1;
+        outline: 2px dashed #92b0b3;
+        outline-offset: -10px;
+        padding: 100px 0px 100px 120px;
+        text-align: center !important;
+        width: 500px;
+    }
+    .upload-container-second input:hover {
+        background: #ddd;
+    }   
+    .upload-container-second:before {
+        position: absolute;
+        bottom: 50px;
+        left: 115px;
+        content: "Čia galite įdėti failus";
+        color: #3f8188;
+        font-weight: 900;
+    }
+	
+	
+    .upload-btn {
+        position: relative;
+        margin-left: 700px;
+        bottom: 150px;
+        padding: 7px 20px;
+    }        
+</style>
+<script>
+
+
+
+    function uploadFiles() {
+            
+        var files = document.getElementById('file_upload').files;
+        var filesSecond = document.getElementById('file_upload1').files;
+
+        if(files.length==0){
+            alert("Please first choose or drop any file(s)...");
+            return;
+        }
+         if(filesSecond.length==0){
+            alert("Please first choose or drop any file(s)...");
+            return;
+        }
+        //var filenames=[];
+       // var filenamesSecond=[];
+        //let textas=[];
+       // var reader = new FileReader();
+        for(var i=0;i<files.length;i++){
+         
+        //    filenames.push(files[i].name); 
+       //  reader.readAsText(files[i]);
+        //reader.onload=function(e){
+        //    textas.push(e.target.result);  
+         for(var j=0;j<filesSecond.length;j++){
+           
+          //   uploadFilesIwillTry(textas,filesSecond[j],filenames,filesSecond[j].name);
+          tarp(files.length,filesSecond.length,i,j,files[i],filesSecond[j],files[i].name,filesSecond[j].name);
+
+
+       
+        }
+        //tblBody.appendChild(row);
+        }
+      
+
+
+    
+    }
+
+    function tarp(f,s,i,j,Nr1,nr2,nr3,nr4){
+        var filenames=[];
+        let textas=[];
+        var reader = new FileReader();
+        var jj=j;
+        var ii=i;
+       var ff=f;
+        var ss=s;
+        let First=Nr1;
+       let Second=nr2;
+      let NameNr1=nr3;
+      let NameNr2=nr4;
+     filenames.push(NameNr1); 
+        reader.readAsText(First);
+        reader.onload=function(e){
+            textas.push(e.target.result);
+            uploadFilesIwillTry(ff,ss,ii,jj,textas,nr2,filenames,nr4);
+        }
+
+    }
+
+    function uploadFilesIwillTry(f,s,i,j,textto,texttoSecond,FirstFile,SecondFile) {
+        var jj=j;
+        var ii=i;
+      var ff=f;
+        var ss=s;
+
+
+      var reader = new FileReader();
+      let textas=textto;
+      let Second=texttoSecond;
+      let NameNr1=FirstFile;
+      let NameNr2=SecondFile;
+      let oas= [];
+
+          reader.readAsText(Second);
+         reader.onload=function(e){
+            oas.push(e.target.result);
+      const wordCountA = wordCountMap(textas.toString());
+     const  wordCountB = wordCountMap(oas.toString()); 
+     let dict = {};
+      addWordsToDictionary(wordCountA,dict);
+      addWordsToDictionary(wordCountB,dict);
+       const vectorA = wordMapToVector(wordCountA,dict);
+        const vectorB = wordMapToVector(wordCountB,dict);  
+        const similarity = getSimilarityScore(cosineSimilarity(vectorA, vectorB)); 
+     // alert(ii+"LLLLLLLL"+jj+"Kkkkkkkkkk"+NameNr2+"_______________"+NameNr1+": "+similarity);
+            var row = document.createElement("tr"); 
+         //   var Nr=0;
+       var body = document.getElementsByTagName("body")[0];
+      var row1 = document.createElement("tr"); 
+      var cell = document.createElement("td");
+      var cellText = document.createTextNode("NR.");
+      var cellText1 = document.createTextNode("Pirmas Failas");
+      var cell1 = document.createElement("td");
+    var cellText2 = document.createTextNode("Antras Failas");
+      var cell2 = document.createElement("td");
+      var cellText3 = document.createTextNode("Panašumo procentas %");
+      var cell3 = document.createElement("td");
+        var tbl = document.createElement("table");
+  var tblBody = document.createElement("tbody");
+  var tblBody1 = document.createElement("tbody");
+      cell.appendChild(cellText);
+      row1.appendChild(cell);
+      cell.style.width = '30px';
+      cell1.appendChild(cellText1);
+      row1.appendChild(cell1);
+      cell1.style.width = '120px';
+     cell2.appendChild(cellText2);
+      row1.appendChild(cell2);
+      cell2.style.width = '120px';
+      cell3.appendChild(cellText3);
+      row1.appendChild(cell3);
+      cell3.style.width = '180px';
+     tblBody1.appendChild(row1);
+
+
+      var cell = document.createElement("td");
+      var cellText = document.createTextNode((ii+1)*(jj+1)+ii);
+      var cellText1 = document.createTextNode(NameNr2);
+      var cell1 = document.createElement("td");
+    var cellText2 = document.createTextNode(NameNr1);
+      var cell2 = document.createElement("td");
+      var cellText3 = document.createTextNode(similarity);
+      var cell3 = document.createElement("td");
+       var tblBody = document.createElement("tbody");
+     cell.appendChild(cellText);
+      row.appendChild(cell);
+      cell.style.width = '30px';
+      cell.style.height = '50px';
+      ////tblBody.appendChild(row);
+      cell1.appendChild(cellText1);
+      row.appendChild(cell1);
+      cell1.style.width = '120px';
+     cell2.appendChild(cellText2);
+      row.appendChild(cell2);
+      cell2.style.width = '120px';
+      cell3.appendChild(cellText3);
+      row.appendChild(cell3);  
+      cell3.style.width = '180px';
+      tblBody.appendChild(row);
+     // row.style.
+     if((ii+1)*(jj+1)==1) {tbl.appendChild(tblBody1);}
+        tbl.appendChild(tblBody);//}
+  
+  // appends <table> into <body>
+  body.appendChild(tbl);
+    tbl.setAttribute("border", "2");
+     // Nr=(ii+1)*(jj+1);
+     // if((ii+1)*(jj+1)==ff*ss){
+      //    print(tblBody,ii)//;}
+      }
+    }
+
+function wordCountMap(str){
+    let words = str.split(' ');
+    let wordCount = {};
+    words.forEach((w)=>{
+        wordCount[w] = (wordCount[w] || 0) +1;
+
+    });
+return wordCount;
+}
+
+function addWordsToDictionary(wordCountmap, dict){
+    for(let key in wordCountmap){
+        dict[key] = true;
+    }
+}
+
+
+function wordMapToVector(map,dict){
+    let wordCountVector = [];
+    for (let term in dict){
+        wordCountVector.push(map[term] || 0);
+    }
+    return wordCountVector;
+}
+
+function dotProduct(vecA, vecB){
+    let product = 0;
+    for(let i=0;i<vecA.length;i++){
+        product += vecA[i] * vecB[i];
+    }
+    return product;
+}
+
+function magnitude(vec){
+    let sum = 0;
+    for (let i = 0;i<vec.length;i++){
+        sum += vec[i] * vec[i];
+    }
+    return Math.sqrt(sum);
+}
+
+function cosineSimilarity(vecA,vecB){
+    return dotProduct(vecA,vecB)/ (magnitude(vecA) * magnitude(vecB));
+}
+
+function getSimilarityScore(val){
+    return Math.round(val * 100)
+}
+
+            
+</script>
+</head>
+<body>
+    <div class="upload-container">
+        <input type="file" id="file_upload" multiple />
+    </div>
+    <div class="upload-container-second">
+        <input type="file" id="file_upload1" multiple />
+    </div>
+    <br>
+    <button class="upload-btn" onclick="uploadFiles()">Pateikti</button>  
+</body>
+</html>

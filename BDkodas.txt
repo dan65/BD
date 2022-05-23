@@ -62,13 +62,14 @@
     }        
 </style>
 <script>
-
+var tbl = document.createElement("table");
 
 
     function uploadFiles() {
             
         var files = document.getElementById('file_upload').files;
         var filesSecond = document.getElementById('file_upload1').files;
+        var count =0;
 
         if(files.length==0){
             alert("Iš pradžių įdėkite failus.");
@@ -98,6 +99,9 @@
        // var filenamesSecond=[];
         //let textas=[];
        // var reader = new FileReader();
+              for(var i=tbl.rows.length;i>0;i--) {
+tbl.deleteRow(i-1);
+}
         for(var i=0;i<files.length;i++){
          
         //    filenames.push(files[i].name); 
@@ -105,9 +109,9 @@
         //reader.onload=function(e){
         //    textas.push(e.target.result);  
          for(var j=0;j<filesSecond.length;j++){
-           
+           count++;
           //   uploadFilesIwillTry(textas,filesSecond[j],filenames,filesSecond[j].name);
-          tarp(files.length,filesSecond.length,i,j,files[i],filesSecond[j],files[i].name,filesSecond[j].name);
+          tarp(files.length,filesSecond.length,i,j,files[i],filesSecond[j],files[i].name,filesSecond[j].name,count);
 
 
        
@@ -120,7 +124,7 @@
     
     }
 
-    function tarp(f,s,i,j,Nr1,nr2,nr3,nr4){
+    function tarp(f,s,i,j,Nr1,nr2,nr3,nr4,c){
         var filenames=[];
         let textas=[];
         var reader = new FileReader();
@@ -128,6 +132,7 @@
         var ii=i;
        var ff=f;
         var ss=s;
+        var count=c;
         let First=Nr1;
        let Second=nr2;
       let NameNr1=nr3;
@@ -136,16 +141,17 @@
         reader.readAsText(First);
         reader.onload=function(e){
             textas.push(e.target.result);
-            uploadFilesIwillTry(ff,ss,ii,jj,textas,nr2,filenames,nr4);
+            uploadFilesIwillTry(ff,ss,ii,jj,textas,nr2,filenames,nr4,count);
         }
 
     }
 
-    function uploadFilesIwillTry(f,s,i,j,textto,texttoSecond,FirstFile,SecondFile) {
+    function uploadFilesIwillTry(f,s,i,j,textto,texttoSecond,FirstFile,SecondFile,c) {
         var jj=j;
         var ii=i;
       var ff=f;
         var ss=s;
+        var count =c;
 
 
       var reader = new FileReader();
@@ -179,29 +185,29 @@
       var cell2 = document.createElement("td");
       var cellText3 = document.createTextNode("Panašumo procentas %");
       var cell3 = document.createElement("td");
-        var tbl = document.createElement("table");
+        
   var tblBody = document.createElement("tbody");
   var tblBody1 = document.createElement("tbody");
       cell.appendChild(cellText);
       row1.appendChild(cell);
-      cell.style.width = '30px';
+      cell.style.width = '100px';
       cell1.appendChild(cellText1);
       row1.appendChild(cell1);
-      cell1.style.width = '120px';
+      cell1.style.width = '360px';
      cell2.appendChild(cellText2);
       row1.appendChild(cell2);
-      cell2.style.width = '120px';
+      cell2.style.width = '360px';
       cell3.appendChild(cellText3);
       row1.appendChild(cell3);
-      cell3.style.width = '180px';
+      cell3.style.width = '540px';
      tblBody1.appendChild(row1);
 
 
       var cell = document.createElement("td");
-      var cellText = document.createTextNode((ii+1)*(jj+1)+ii);
-      var cellText1 = document.createTextNode(NameNr2);
+      var cellText = document.createTextNode(count);
+      var cellText1 = document.createTextNode(NameNr1);
       var cell1 = document.createElement("td");
-    var cellText2 = document.createTextNode(NameNr1);
+    var cellText2 = document.createTextNode(NameNr2);
       var cell2 = document.createElement("td");
       var cellText3 = document.createTextNode(similarity);
       var cell3 = document.createElement("td");
@@ -222,12 +228,14 @@
       cell3.style.width = '180px';
       tblBody.appendChild(row);
      // row.style.
-     if((ii+1)*(jj+1)==1) {tbl.appendChild(tblBody1);}
+     if(count==1) {tbl.appendChild(tblBody1);}
         tbl.appendChild(tblBody);//}
   
   // appends <table> into <body>
   body.appendChild(tbl);
     tbl.setAttribute("border", "2");
+
+    tbl.style.marginLeft = "200px";
      // Nr=(ii+1)*(jj+1);
      // if((ii+1)*(jj+1)==ff*ss){
       //    print(tblBody,ii)//;}
